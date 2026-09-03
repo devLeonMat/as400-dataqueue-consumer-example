@@ -1,0 +1,10 @@
+consumer:
+  fake:
+    message-count: 50000
+    interval: 0ms
+  external-api:
+    enabled: false
+
+logging:
+  level:
+    com.example.as400: INFO

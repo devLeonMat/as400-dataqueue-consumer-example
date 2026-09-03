@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: as400-dataqueue-consumer
+  lifecycle:
+    timeout-per-shutdown-phase: 35s
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+
+server:
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+consumer:
+  buffer-capacity: ${CONSUMER_BUFFER_CAPACITY:1024}
+  concurrency: ${CONSUMER_CONCURRENCY:16}
+  read-timeout: ${AS400_READ_TIMEOUT:5s}
+  shutdown-timeout: ${CONSUMER_SHUTDOWN_TIMEOUT:30s}
+  backoff:
+    initial: ${AS400_BACKOFF_INITIAL:1s}
+    maximum: ${AS400_BACKOFF_MAXIMUM:30s}
+    multiplier: ${AS400_BACKOFF_MULTIPLIER:2.0}
+    jitter: ${AS400_BACKOFF_JITTER:0.20}
+  as400:
+    host: ${AS400_HOST:}
+    username: ${AS400_USERNAME:}
+    password: ${AS400_PASSWORD:}
+    queue-path: ${AS400_QUEUE_PATH:/QSYS.LIB/EXAMPLE.LIB/INPUT.DTAQ}
+  fake:
+    message-count: ${FAKE_MESSAGE_COUNT:50000}
+    interval: ${FAKE_MESSAGE_INTERVAL:0ms}
+  external-api:
+    base-url: ${EXTERNAL_API_BASE_URL:http://localhost:8081}
+    path: ${EXTERNAL_API_PATH:/messages}
+    enabled: ${EXTERNAL_API_ENABLED:true}
+  kafka:
+    topic: ${KAFKA_TOPIC:as400.messages}

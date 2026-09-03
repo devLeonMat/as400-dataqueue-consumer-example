@@ -1,0 +1,24 @@
+consumer:
+  buffer-capacity: 64
+  concurrency: 8
+  read-timeout: 20ms
+  shutdown-timeout: 5s
+  backoff:
+    initial: 1ms
+    maximum: 10ms
+    multiplier: 2.0
+    jitter: 0.0
+  as400:
+    host: unused
+    username: unused
+    password: unused
+    queue-path: /unused
+  fake:
+    message-count: 100
+    interval: 0ms
+  external-api:
+    base-url: http://localhost:8081
+    path: /messages
+    enabled: false
+  kafka:
+    topic: test
