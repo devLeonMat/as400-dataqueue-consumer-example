@@ -32,7 +32,11 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
-    jvmArgs '-XX:+EnableDynamicAgentLoading'
+    jvmArgs '-XX:+EnableDynamicAgentLoading', '--enable-native-access=ALL-UNNAMED'
+}
+
+tasks.named('bootRun') {
+    jvmArgs '--enable-native-access=ALL-UNNAMED'
 }
 
 tasks.withType(JavaCompile).configureEach {

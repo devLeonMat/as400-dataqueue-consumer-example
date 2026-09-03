@@ -9,4 +9,4 @@ WORKDIR /app
 COPY --from=build /workspace/build/libs/*.jar app.jar
 USER 10001
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "--enable-native-access=ALL-UNNAMED", "-jar", "/app/app.jar"]
